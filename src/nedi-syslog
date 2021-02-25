@@ -1,0 +1,34 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          nedi-syslog
+# Required-Start:    mysql
+# Required-Stop:
+# Should-Start:
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start NeDi's syslog service
+# Description:       Receive and stor syslog events in NeDi's events table
+#                    
+### END INIT INFO
+
+PATH=/sbin:/usr/sbin:/bin:/usr/bin
+. /lib/init/vars.sh
+
+case "$1" in
+  start|"")
+    start-stop-daemon --start --chuid www-data --exec /var/nedi/syslog.pl -- -Dp 1514
+    ;;
+  stop)
+    start-stop-daemon --stop --name syslog.pl 
+    RETVAL="\$?"
+
+    sleep 1
+    return "\$RETVAL"
+    ;;
+  *)
+    echo "Usage: nedi-syslog [start|stop]" >&2
+    exit 3
+    ;;
+esac
+
+:

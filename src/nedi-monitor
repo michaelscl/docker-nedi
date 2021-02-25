@@ -1,0 +1,34 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          nedi-monitor
+# Required-Start:    mysql
+# Required-Stop:
+# Should-Start:
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start NeDi's monitoring
+# Description:       Monitored targets are checked every 3 minutes 
+#                    by default, using snmp uptime or ping etc.
+#                    
+### END INIT INFO
+
+PATH=/sbin:/usr/sbin:/bin:/usr/bin
+. /lib/init/vars.sh
+
+case "$1" in
+  start|"")
+    start-stop-daemon --start --chuid www-data --exec /var/nedi/moni.pl -- -D
+    ;;
+  stop)
+    start-stop-daemon --stop --name moni.pl 
+    RETVAL="\$?"
+
+    sleep 1
+    return "\$RETVAL"
+    ;;
+  *)
+    echo "Usage: nedi-monitor [start|stop]" >&2
+    exit 3
+    ;;
+esac
+:

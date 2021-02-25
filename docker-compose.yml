@@ -1,0 +1,46 @@
+version: "3.3"
+services:
+    app:
+        # build: .
+        image: michaelscz/nedi
+        restart: unless-stopped
+        ports: 
+            - 8180:80
+        volumes:
+            - root:/var/nedi
+            - sysobj:/var/nedi/sysobj
+            - html:/var/nedi/html
+        hostname: 'nedi'
+        networks:
+            - lan
+    db:
+        #image: mysql:8.0
+        image: mariadb:10-focal
+        restart: unless-stopped
+        command: 
+            - --default-authentication-plugin=mysql_native_password
+        volumes: 
+            - mysqldata:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: dbpa55
+        hostname: 'mariadb'
+        networks:
+            - lan
+    adminer:
+        image: adminer
+        restart: unless-stopped
+        hostname: 'adminer'
+        ports:
+            - 8181:8080
+        networks:
+            - lan
+
+networks:
+    lan:
+
+volumes: 
+    root:
+    sysobj:
+    html:
+    mysqldata:
+
