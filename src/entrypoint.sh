@@ -3,10 +3,10 @@
 echo "-----------------------------------------------------------------------------------------------------------"
 
 echo "Start php-fpm ..."
+PHPVER=`ls /etc/php`
 service php${PHPVER}-fpm start
 
 echo "Restart NGINX ..."
-PHPVER=`ls /etc/php`
 sed -i -e "s/xPHPVERx/$PHPVER/" /etc/nginx/sites-enabled/default
 service nginx restart
 
