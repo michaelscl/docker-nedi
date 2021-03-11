@@ -8,7 +8,6 @@ services:
             - 8180:80
             - 514:514/udp
         volumes:
-            #- sysobj:/var/nedi/sysobj
             - conf:/var/nedi/conf
         hostname: 'nedi'
         networks:
@@ -39,7 +38,6 @@ networks:
     lan:
 
 volumes: 
-    #sysobj:
     conf:
     mysqldata:
 
