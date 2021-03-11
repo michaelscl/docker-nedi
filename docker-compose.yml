@@ -6,10 +6,10 @@ services:
         restart: unless-stopped
         ports: 
             - 8180:80
+            - 514:514/udp
         volumes:
-            - root:/var/nedi
-            - sysobj:/var/nedi/sysobj
-            - html:/var/nedi/html
+            #- sysobj:/var/nedi/sysobj
+            - conf:/var/nedi/conf
         hostname: 'nedi'
         networks:
             - lan
@@ -39,8 +39,7 @@ networks:
     lan:
 
 volumes: 
-    root:
-    sysobj:
-    html:
+    #sysobj:
+    conf:
     mysqldata:
 

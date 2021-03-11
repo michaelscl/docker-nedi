@@ -26,8 +26,12 @@ RUN mkdir /var/nedi && \
     chown -R www-data.www-data /var/nedi && \
     mkdir -p /var/log/nedi && \
     chown -R www-data.www-data /var/log/nedi && \
+    mv /var/nedi/sysobj /var/nedi/conf && \
+    ln -s /var/nedi/conf/sysobj /var/nedi && \
     sed -i -e 's/dbhost.*localhost/dbhost		db/' /var/nedi/nedi.conf && \
-    ln -s /var/nedi/nedi.conf /var/nedi/html/nedi.conf && \
+    mv /var/nedi/nedi.conf /var/nedi/conf/nedi.conf && \
+    ln -s /var/nedi/conf/nedi.conf /var/nedi/html/nedi.conf && \
+    ln -s /var/nedi/conf/nedi.conf /var/nedi/nedi.conf && \
     if ! grep -q Time::HiRes /usr/share/perl5/Net/SNMP/Message.pm; then \
         echo "Enabling SNMP latency measurement"; \
         sed -i '23 i use Time::HiRes;' /usr/share/perl5/Net/SNMP/Message.pm; \
@@ -60,4 +64,4 @@ RUN  chmod 755 /entrypoint.sh
 ENTRYPOINT [ "/entrypoint.sh" ]
 #CMD [ "/entrypoint.sh" ]
 
-EXPOSE 80
+EXPOSE 80 514

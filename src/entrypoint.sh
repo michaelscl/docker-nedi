@@ -1,29 +1,35 @@
 #!/bin/bash
 
+echo "-----------------------------------------------------------------------------------------------------------"
 
-PHPVER=`ls /etc/php`
-
-echo "Start php-fpm ...."
+echo "Start php-fpm ..."
 service php${PHPVER}-fpm start
 
-echo "Start NGINX ....."
+echo "Restart NGINX ..."
+PHPVER=`ls /etc/php`
 sed -i -e "s/xPHPVERx/$PHPVER/" /etc/nginx/sites-enabled/default
-cat /etc/nginx/sites-enabled/default
 service nginx restart
 
-# service nedi-syslog start
-# service nedi-monitor start
-
-
-echo "Waiting 20 sec...."
+echo "Waiting 20 sec while SQL starts ...."
 sleep 20
-echo "First install NEDI ...."
-/var/nedi/nedi.pl -i root dbpa55
+
+if [ ! -f /nediInstalled ]; then
+    echo "Install NEDI ..."
+    /var/nedi/nedi.pl -i root dbpa55
+    touch /nediInstalled
+fi
+echo "Start nedi-syslog ..."
+service nedi-syslog start
+
+echo "Start nedi-monitor ..."
+service nedi-monitor start
+
+echo "End of entrypoint"
 
 while [ 1 ]
 do
-    sleep 5
-    echo .
+    sleep 60
+    echo -n .
 done
 
 
