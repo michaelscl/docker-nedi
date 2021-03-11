@@ -13,7 +13,7 @@ RUN echo $TZ > /etc/timezone && \
                         mariadb-client \
                         php-fpm php-mysql php-snmp php-gd php-ldap php-radius \
                         # iptables-persistent \
-                        net-tools snmp rrdtool nginx openssl fping wget mc htop && \
+                        net-tools snmp rrdtool nginx openssl fping wget mc htop git && \
     apt-get clean && \
     rm -rf /tmp/* /var/tmp/* /var/lib/apt/lists/*
 
@@ -23,15 +23,16 @@ RUN mkdir /var/nedi && \
     wget http://www.nedi.ch/pub/${NEDI} && \
     tar zxf ${NEDI} && \
     rm ${NEDI} && \
-    chown -R www-data.www-data /var/nedi && \
     mkdir -p /var/log/nedi && \
     chown -R www-data.www-data /var/log/nedi && \
-    mv /var/nedi/sysobj /var/nedi/conf && \
+    rm -rf /var/nedi/sysobj && \
+    git clone https://github.com/michaelscl/nedi-sysobj.git /var/nedi/conf/sysobj && \
     ln -s /var/nedi/conf/sysobj /var/nedi && \
     sed -i -e 's/dbhost.*localhost/dbhost		db/' /var/nedi/nedi.conf && \
     mv /var/nedi/nedi.conf /var/nedi/conf/nedi.conf && \
     ln -s /var/nedi/conf/nedi.conf /var/nedi/html/nedi.conf && \
     ln -s /var/nedi/conf/nedi.conf /var/nedi/nedi.conf && \
+    chown -R www-data.www-data /var/nedi && \
     if ! grep -q Time::HiRes /usr/share/perl5/Net/SNMP/Message.pm; then \
         echo "Enabling SNMP latency measurement"; \
         sed -i '23 i use Time::HiRes;' /usr/share/perl5/Net/SNMP/Message.pm; \
