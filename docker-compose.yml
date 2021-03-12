@@ -10,6 +10,8 @@ services:
         volumes:
             - conf:/var/nedi/conf
         hostname: 'nedi'
+        environment: 
+            CRON: "0 * * * *"
         networks:
             - lan
     db:
