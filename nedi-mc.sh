@@ -1,0 +1,1 @@
+sudo docker exec -it nedi_app_1 mc -a
