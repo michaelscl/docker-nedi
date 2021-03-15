@@ -16,18 +16,13 @@ service nginx restart
 
 #######
 # CRON
-echo "Set crontab ..."
-if [ -z "${CRON}" ];
+if [ ! -z "${CRON}" ];
 then
-    echo "CRON not set"
-    echo "Setting default CRON: NEDI starts every hour in 15min"
-    CRON="15 * * * *"
-else
-    echo "Setting default CRON: ${CRON}"
+    echo "Set crontab ${CRON} ..."
+    echo "${CRON}     www-data    /var/nedi/nedi.pl -por 3" > /etc/cron.d/nedi
+    echo "Restart crontab ..."
+    service cron restart
 fi
-echo "${CRON}     www-data    /var/nedi/nedi.pl -por" > /etc/cron.d/nedi
-echo "Restart crontab ..."
-service cron restart
 
 #
 echo "Waiting 20 sec while SQL starts ...."

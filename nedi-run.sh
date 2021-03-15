@@ -1,1 +1,1 @@
-sudo docker exec -it nedi_app_1 /var/nedi/nedi.pl -por 3
+sudo docker exec -it -u www-data nedi_app_1 /var/nedi/nedi.pl -por 3
