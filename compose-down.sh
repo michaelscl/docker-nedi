@@ -1,1 +1,1 @@
-sudo docker-compose down --volumes
+sudo docker-compose down
