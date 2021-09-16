@@ -29,11 +29,6 @@ RUN mkdir /var/nedi && \
     git clone https://github.com/michaelscl/nedi-sysobj.git /var/nedi/conf/sysobj && \
     ln -s /var/nedi/conf/sysobj /var/nedi && \
     sed -i -e 's/dbhost.*localhost/dbhost		db/' /var/nedi/nedi.conf && \
-    mv /var/nedi/nedi.conf /var/nedi/conf/nedi.conf && \
-    ln -s /var/nedi/conf/nedi.conf /var/nedi/html/nedi.conf && \
-    ln -s /var/nedi/conf/nedi.conf /var/nedi/nedi.conf && \
-    mv /var/nedi/seedlist /var/nedi/conf/seedlist && \
-    ln -s /var/nedi/conf/seedlist /var/nedi/seedlist && \
     chown -R www-data.www-data /var/nedi && \
     if ! grep -q Time::HiRes /usr/share/perl5/Net/SNMP/Message.pm; then \
         echo "Enabling SNMP latency measurement"; \
@@ -63,6 +58,7 @@ RUN chmod 755 /etc/init.d/nedi-syslog && \
     update-rc.d nedi-syslog defaults
 
 COPY src/entrypoint.sh /entrypoint.sh
+
 RUN  chmod 755 /entrypoint.sh
 ENTRYPOINT [ "/entrypoint.sh" ]
 #CMD [ "/entrypoint.sh" ]

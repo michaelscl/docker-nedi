@@ -30,10 +30,14 @@ sleep 20
 
 #######
 # NEDI
-if [ ! -f /nediInstalled ]; then
+if [ ! -f /var/nedi/conf/nedi.conf ]; then
     echo "Install NEDI ..."
     /var/nedi/nedi.pl -i root dbpa55
-    touch /nediInstalled
+    mv /var/nedi/nedi.conf /var/nedi/conf/nedi.conf
+    ln -s /var/nedi/conf/nedi.conf /var/nedi/html/nedi.conf
+    ln -s /var/nedi/conf/nedi.conf /var/nedi/nedi.conf
+    mv /var/nedi/seedlist /var/nedi/conf/seedlist
+    ln -s /var/nedi/conf/seedlist /var/nedi/seedlist
 fi
 echo "Start nedi-syslog ..."
 service nedi-syslog start
@@ -41,6 +45,7 @@ service nedi-syslog start
 echo "Start nedi-monitor ..."
 service nedi-monitor start
 
+echo "-----------------"
 echo "End of entrypoint"
 
 while [ 1 ]

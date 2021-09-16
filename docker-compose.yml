@@ -2,26 +2,27 @@ version: "3.3"
 services:
     app:
         # build: .
-        image: michaelscz/nedi
+        image: michaelscz/nedi:0.0.1
+        user: "${UID}:${GID}"
         restart: unless-stopped
         ports: 
             - 8180:80
-            - 514:514/udp
         volumes:
-            - conf:/var/nedi/conf
+            - ./conf:/var/nedi/conf
         hostname: 'nedi'
         environment: 
-            CRON: "*/15 * * * *"
+            CRON: "15 * * * *"
         networks:
             - lan
     db:
         #image: mysql:8.0
         image: mariadb:10-focal
+        user: "${UID}:${GID}"
         restart: unless-stopped
         command: 
             - --default-authentication-plugin=mysql_native_password
         volumes: 
-            - mysqldata:/var/lib/mysql
+            - ./mysql:/var/lib/mysql
         environment:
             MYSQL_ROOT_PASSWORD: dbpa55
         hostname: 'mariadb'
@@ -29,6 +30,7 @@ services:
             - lan
     adminer:
         image: adminer
+        user: "${UID}:${GID}"
         restart: unless-stopped
         hostname: 'adminer'
         ports:
@@ -38,8 +40,4 @@ services:
 
 networks:
     lan:
-
-volumes: 
-    conf:
-    mysqldata:
 
