@@ -11,7 +11,7 @@ services:
             - conf:/var/nedi/conf
         hostname: 'nedi'
         environment: 
-            CRON: "*/5 * * * *"
+            CRON: "*/15 * * * *"
         networks:
             - lan
     db:
