@@ -30,10 +30,10 @@ sleep 20
 
 #######
 # NEDI
-if [ ! -f /nediInstalled ]; then
+if [ ! -f /var/nedi/conf/INSTALLED ]; then
     echo "Install NEDI ..."
     /var/nedi/nedi.pl -i root dbpa55
-    touch /nediInstalled
+    touch /var/nedi/conf/INSTALLED
 fi
 echo "Start nedi-syslog ..."
 service nedi-syslog start
