@@ -41,6 +41,12 @@ RUN mkdir /var/nedi && \
         sed -i '687 i \ \ \ $this->{_transport}->{_send_time} = Time::HiRes::time;' /usr/share/perl5/Net/SNMP/Message.pm; \
     fi
 
+# Extract IMG files
+COPY src/img.tgz /var/nedi/html/img.tgz
+RUN cd /var/nedi/html && \
+    tar zxvf img.tgz && \
+    rm -rf img.tgz
+
 RUN PHPVER=`ls /etc/php` && \
     sed -i -e 's/upload_max_filesize = 2M/upload_max_filesize = 8M/' /etc/php/$PHPVER/fpm/php.ini && \
     sed -i -e 's/display_errors = Off/display_errors = On/' /etc/php/$PHPVER/fpm/php.ini && \
