@@ -13,7 +13,7 @@ RUN echo $TZ > /etc/timezone && \
                         mariadb-client \
                         php-fpm php-mysql php-snmp php-gd php-ldap php-radius \
                         # iptables-persistent \
-                        net-tools snmp rrdtool nginx openssl fping wget mc htop git cron && \
+                        net-tools snmp rrdtool nginx openssl fping wget mc htop git cron iputils-ping && \
     apt-get clean && \
     rm -rf /tmp/* /var/tmp/* /var/lib/apt/lists/*
 
