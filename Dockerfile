@@ -3,7 +3,7 @@ FROM ubuntu:20.04
 ENV TZ=Europe/Prague
 ENV DEBIAN_FRONTEND=noninteractive
 
-ARG NEDI=nedi-2.0C.npkg
+ARG NEDI=nedi-2.1C.tgz
 
 # Installation of nesesary package/software for this containers...
 RUN echo $TZ > /etc/timezone && \
@@ -18,9 +18,8 @@ RUN echo $TZ > /etc/timezone && \
     rm -rf /tmp/* /var/tmp/* /var/lib/apt/lists/*
 
 # Installing NeDi community edition
-RUN mkdir /var/nedi && \
-    cd /var/nedi && \
-    wget http://www.nedi.ch/pub/${NEDI} && \
+COPY src/${NEDI} /var/nedi/${NEDI}
+RUN cd /var/nedi && \
     tar zxf ${NEDI} && \
     rm ${NEDI} && \
     mkdir -p /var/log/nedi && \

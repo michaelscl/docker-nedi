@@ -3,4 +3,4 @@ set -e
 
 DOCKER_RUN_IMAGE=michaelscz/nedi
 
-sudo docker build ./ -t "${DOCKER_RUN_IMAGE}" --no-cache=true
+sudo docker build ./ -t "${DOCKER_RUN_IMAGE}" --no-cache=false
