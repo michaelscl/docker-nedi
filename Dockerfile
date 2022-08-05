@@ -3,7 +3,7 @@ FROM ubuntu:20.04
 ENV TZ=Europe/Prague
 ENV DEBIAN_FRONTEND=noninteractive
 
-ARG NEDI=nedi-2.1C.npkg
+ARG NEDI=nedi-2.0C.npkg
 
 # Installation of nesesary package/software for this containers...
 RUN echo $TZ > /etc/timezone && \
