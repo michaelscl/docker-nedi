@@ -1,9 +1,9 @@
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 ENV TZ=Europe/Prague
 ENV DEBIAN_FRONTEND=noninteractive
 
-ARG NEDI=nedi-2.1C.tgz
+ARG NEDI=nedi-2.2C.tgz
 
 # Installation of nesesary package/software for this containers...
 RUN echo $TZ > /etc/timezone && \
@@ -11,7 +11,8 @@ RUN echo $TZ > /etc/timezone && \
     apt-get install -y  libdbd-mysql-perl libnet-snmp-perl libnet-telnet-perl libsocket6-perl librrds-perl libalgorithm-diff-perl libcrypt-rijndael-perl libdigest-hmac-perl libcrypt-des-perl libcrypt-hcesha-perl \
                         libio-pty-perl libwww-perl libnet-ntp-perl libnet-dns-perl perl-doc \ 
                         mariadb-client \
-                        php-fpm php-mysql php-snmp php-gd php-ldap php-radius \
+                        php-fpm php-mysql php-snmp php-gd php-ldap \
+			# php-radius \
                         # iptables-persistent \
                         net-tools snmp rrdtool nginx openssl fping wget mc htop git cron iputils-ping && \
     apt-get clean && \
