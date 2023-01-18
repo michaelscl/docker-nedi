@@ -26,8 +26,7 @@ RUN cd /var/nedi && \
     mkdir -p /var/log/nedi && \
     chown -R www-data.www-data /var/log/nedi && \
     rm -rf /var/nedi/sysobj && \
-    git clone https://github.com/michaelscl/nedi-sysobj.git /var/nedi/conf/sysobj && \
-    ln -s /var/nedi/conf/sysobj /var/nedi && \
+    git clone https://github.com/michaelscl/nedi-sysobj.git /var/nedi/sysobj && \
     sed -i -e 's/dbhost.*localhost/dbhost		db/' /var/nedi/nedi.conf && \
     mv /var/nedi/nedi.conf /var/nedi/conf/nedi.conf && \
     ln -s /var/nedi/conf/nedi.conf /var/nedi/html/nedi.conf && \
