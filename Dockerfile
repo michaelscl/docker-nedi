@@ -27,6 +27,8 @@ RUN cd /var/nedi && \
     chown -R www-data.www-data /var/log/nedi && \
     rm -rf /var/nedi/sysobj && \
     git clone https://github.com/michaelscl/nedi-sysobj.git /var/nedi/sysobj && \
+    rm -rf /var/nedi/html/img && \
+    git clone https://github.com/michaelscl/nedi-img.git /var/nedi/html/img && \
     sed -i -e 's/dbhost.*localhost/dbhost		db/' /var/nedi/nedi.conf && \
     mv /var/nedi/nedi.conf /var/nedi/conf/nedi.conf && \
     ln -s /var/nedi/conf/nedi.conf /var/nedi/html/nedi.conf && \
@@ -39,12 +41,6 @@ RUN cd /var/nedi && \
         sed -i '23 i use Time::HiRes;' /usr/share/perl5/Net/SNMP/Message.pm; \
         sed -i '687 i \ \ \ $this->{_transport}->{_send_time} = Time::HiRes::time;' /usr/share/perl5/Net/SNMP/Message.pm; \
     fi
-
-# Extract IMG files
-COPY src/img.tgz /var/nedi/html/img.tgz
-RUN cd /var/nedi/html && \
-    tar zxvf img.tgz && \
-    rm -rf img.tgz
 
 RUN PHPVER=`ls /etc/php` && \
     sed -i -e 's/upload_max_filesize = 2M/upload_max_filesize = 8M/' /etc/php/$PHPVER/fpm/php.ini && \
