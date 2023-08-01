@@ -1,1 +1,1 @@
-sudo docker exec -it nedi-app-1 mc -a
+sudo docker exec -it nedi-app mc -a /var/nedi/conf

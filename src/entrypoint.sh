@@ -25,8 +25,8 @@ then
 fi
 
 #
-echo "Waiting 20 sec while SQL starts ...."
-sleep 20
+#echo "Waiting 20 sec while SQL starts ...."
+#sleep 20
 
 #######
 # NEDI

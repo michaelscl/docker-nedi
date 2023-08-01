@@ -48,9 +48,9 @@ RUN cd /var/nedi && \
     fi
 
 RUN PHPVER=`ls /etc/php` && \
-    sed -i -e 's/upload_max_filesize = 2M/upload_max_filesize = 8M/' /etc/php/$PHPVER/fpm/php.ini && \
-    sed -i -e 's/display_errors = Off/display_errors = On/' /etc/php/$PHPVER/fpm/php.ini && \
-    sed -i -e 's/display_startup_errors = Off/display_startup_errors = On/' /etc/php/$PHPVER/fpm/php.ini
+    sed -i -e 's/upload_max_filesize = 2M/upload_max_filesize = 8M/'         /etc/php/$PHPVER/fpm/php.ini && \
+    sed -i -e 's/display_errors = Off/display_errors = On/'                  /etc/php/$PHPVER/fpm/php.ini && \
+    sed -i -e 's/display_startup_errors = Off/display_startup_errors = Off/' /etc/php/$PHPVER/fpm/php.ini
 
 # Nginx
 RUN openssl genrsa -out /etc/ssl/private/server.key 2048 && \
