@@ -1,0 +1,1 @@
+sudo docker exec -it nedi-adminer /bin/bash

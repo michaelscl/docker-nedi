@@ -3,6 +3,7 @@ services:
     app:
         # build: .
         image: michaelscz/nedi
+        container_name: nedi-app
         restart: unless-stopped
         ports: 
             - 8180:80
@@ -12,11 +13,19 @@ services:
         hostname: 'nedi'
         environment: 
             CRON: "15 * * * *"
+        healthcheck:
+            test: ["CMD", "nc", "-vz", "localhost","80"]
+            interval: 10s
+            timeout: 1s
+            retries: 20
+        depends_on:
+          - db
         networks:
             - lan
     db:
         #image: mysql:8.0
         image: mariadb:10-focal
+        container_name: nedi-db
         restart: unless-stopped
         command: 
             - --default-authentication-plugin=mysql_native_password
@@ -25,14 +34,22 @@ services:
         environment:
             MYSQL_ROOT_PASSWORD: dbpa55
         hostname: 'mariadb'
+        healthcheck:
+            test: ["CMD", "[", "-e", "/run/mysqld/mysqld.sock", "]" ]
+            interval: 10s
+            timeout: 1s
+            retries: 20
         networks:
             - lan
     adminer:
         image: adminer
+        container_name: nedi-adminer
         restart: unless-stopped
         hostname: 'adminer'
         ports:
             - 8181:8080
+        depends_on:
+          - db
         networks:
             - lan
 

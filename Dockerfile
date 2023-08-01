@@ -4,6 +4,7 @@ ENV TZ=Europe/Prague
 ENV DEBIAN_FRONTEND=noninteractive
 
 ARG NEDI=nedi-2.2C.tgz
+ARG NEDIPATCH=nedi-2.3p1.tgz
 
 # Installation of nesesary package/software for this containers...
 RUN echo $TZ > /etc/timezone && \
@@ -12,17 +13,21 @@ RUN echo $TZ > /etc/timezone && \
                         libio-pty-perl libwww-perl libnet-ntp-perl libnet-dns-perl perl-doc \ 
                         mariadb-client \
                         php-fpm php-mysql php-snmp php-gd php-ldap \
-			# php-radius \
+			            # php-radius \
                         # iptables-persistent \
-                        net-tools snmp rrdtool nginx openssl fping wget mc htop git cron iputils-ping && \
+                        net-tools snmp rrdtool nginx openssl fping wget mc netcat htop git cron iputils-ping && \
     apt-get clean && \
     rm -rf /tmp/* /var/tmp/* /var/lib/apt/lists/*
 
 # Installing NeDi community edition
-COPY src/${NEDI} /var/nedi/${NEDI}
+COPY src/${NEDI}        /var/nedi/${NEDI}
+COPY src/${NEDIPATCH}   /var/nedi/${NEDIPATCH}
+
 RUN cd /var/nedi && \
     tar zxf ${NEDI} && \
+    tar zxf ${NEDIPATCH} && \
     rm ${NEDI} && \
+    rm ${NEDIPATCH} && \
     mkdir -p /var/log/nedi && \
     chown -R www-data.www-data /var/log/nedi && \
     rm -rf /var/nedi/sysobj && \

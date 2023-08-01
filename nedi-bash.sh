@@ -1,1 +1,1 @@
-sudo docker exec -it nedi_app_1 /bin/bash
+sudo docker exec -it nedi-app-1 /bin/bash
